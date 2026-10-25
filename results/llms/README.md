@@ -1,0 +1,1 @@
+Guardar una carpeta por herramienta/modelo/contrato/ejecución. No editar las respuestas originales. Registrar también fecha, interfaz, permisos, prompt exacto y cualquier rechazo. No subir tokens ni credenciales.

@@ -1,0 +1,1 @@
+Conservar el código fuente original con su licencia, URL y versión. Nunca modificar el original. Enviar a los LLM solamente las versiones de `clean/` y, cuando corresponda, los controles revisados. Mantener el ground truth separado de las entradas.

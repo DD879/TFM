@@ -1,0 +1,16 @@
+{
+  "contract_id": "",
+  "tool": "",
+  "model": "",
+  "run_id": "",
+  "date_iso": "",
+  "access_mode": "",
+  "prompt_version": "auditoria_v1",
+  "contract_sha256": "",
+  "enabled_tools": [],
+  "response_raw": "",
+  "elapsed_seconds": null,
+  "input_tokens": null,
+  "output_tokens": null,
+  "notes": ""
+}

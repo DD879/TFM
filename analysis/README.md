@@ -1,0 +1,1 @@
+Los resultados cuantitativos solo se calculan sobre hallazgos adjudicados. Las filas `PENDING` se excluyen de métricas y deben resolverse mediante revisión técnica. Un mismo hallazgo no debe contabilizarse dos veces.
