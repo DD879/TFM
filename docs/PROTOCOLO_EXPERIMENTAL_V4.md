@@ -3,8 +3,8 @@
 La versión V3 corresponde exclusivamente al piloto de SC01 y SC04. **No mezclar las ejecuciones V3 con la campaña V4** al calcular métricas.
 
 ## Alcance
-- Comparación principal: ChatGPT GPT-6 Instant; Gemini 3.1 Pro, razonamiento Medio; Claude Code (modelo y versión exactos pendientes de registrar en la ejecución). Registrar los nombres que muestre cada herramienta, pues los proveedores pueden cambiarlos.
-- Claude Code es un agente y no equivale a Claude web. Las respuestas de Claude web del piloto V3 no cuentan como pruebas de Claude Code. La campaña V4 de Claude Code requiere permisos restringidos, registro de herramientas y acciones ejecutadas; las diferencias de modalidad deben discutirse en el análisis.
+- Comparación principal: ChatGPT GPT-6 Instant; Gemini 3.1 Pro (razonamiento Medio); Claude Sonnet 5.5 (esfuerzo Medio). Los tres sistemas se evaluarán mediante interfaces conversacionales.
+- Las tres herramientas se evaluarán en modo conversacional, sin acceso a Internet, repositorios externos ni ejecución de comandos. Se registrarán modelo, configuración, fecha y respuesta íntegra.
 - Corpus: 12 contratos blind SC01–SC12, con ground truth privado separado.
 - Tres ejecuciones independientes por contrato y herramienta en la campaña principal (108 auditorías previstas); una sesión nueva por ejecución, sin memoria del proyecto ni acceso a la referencia de verdad.
 
@@ -15,7 +15,7 @@ Desde la raíz de `~/TFM`, tras copiar `prompts/auditoria_v4.txt` y `scripts/pre
 python3 scripts/prepare_prompt_v4.py contracts/blind/SC01.sol
 ```
 
-El script genera `pilot/inputs_v4/SC01_v4_prompt.txt` y `pilot/inputs_v4/SC01_v4_metadata.json`. El archivo `.sol` permanece intacto. Los prefijos `L001 |` son una vista de lectura y no deben copiarse a los analizadores o al compilador. ChatGPT y Gemini reciben la vista numerada. Claude Code puede recibirla como instrucción junto al acceso de solo lectura al mismo `.sol`; si utiliza herramientas, se registrarán todos los permisos y comandos, y esa diferencia de modalidad se reconocerá explícitamente.
+El script genera `pilot/inputs_v4/SC01_v4_prompt.txt` y `pilot/inputs_v4/SC01_v4_metadata.json`. El archivo `.sol` permanece intacto. Los prefijos `L001 |` se utilizan únicamente para localizar instrucciones. Las tres herramientas recibirán exactamente el mismo prompt numerado.
 
 ## Registro mínimo por ejecución
 Contrato, fuente SHA-256, plataforma, nombre exacto del modelo, modalidad, esfuerzo/razonamiento, fecha y hora, prompt V4, archivo de entrada, respuesta original, herramientas disponibles y eventuales rechazos. Conservar la respuesta completa sin corregirla.
@@ -37,7 +37,7 @@ Cuatro dimensiones, 0–2 puntos cada una: localización, explicación, severida
 Registrar por separado (a) frecuencia de detección por vulnerabilidad en tres ejecuciones y (b) estabilidad entre conjuntos de hallazgos normalizados de las repeticiones. No confundir frecuencia de detección con consistencia global.
 
 ## Seguridad metodológica
-No compartir ground truth con los modelos. Un prompt que prohíbe herramientas no garantiza aislamiento; Claude Code necesita controles reales de permisos, ficheros y red. SmartBugs es público y puede estar contaminado en entrenamiento; anonimizar identificadores no elimina esa amenaza.
+No se compartirá el ground truth con los modelos. Las pruebas se realizarán en sesiones independientes, sin búsqueda web ni archivos adicionales. La posible contaminación del benchmark se documentará como amenaza a la validez.
 
 ## Estado
 V4 está **definida y lista para una validación de formato**, pero no se presenta como ejecutada. Los resultados V3 del piloto se conservan sin modificar.

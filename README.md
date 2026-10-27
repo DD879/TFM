@@ -7,7 +7,7 @@ Repositorio de trabajo para el TFM del Máster en Ciberseguridad y Privacidad (U
 ## Objetivo y alcance
 - Corpus principal: 10-15 contratos Solidity; objetivo operativo: 12.
 - Categorías previstas: reentrancia, control de acceso, llamadas no comprobadas, errores aritméticos y denegación de servicio.
-- Sistemas evaluados: ChatGPT, Gemini, Claude Code; baselines: Slither y Mythril (si son compatibles).
+- Sistemas evaluados: ChatGPT, Gemini, Claude; baselines: Slither y Mythril (si son compatibles).
 - Experimento principal: tres ejecuciones independientes por contrato y plataforma de IA, según coste y disponibilidad.
 - Experimento secundario: dos variantes de modelo sobre 4-6 contratos (opcional).
 

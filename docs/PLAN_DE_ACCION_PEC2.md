@@ -17,15 +17,15 @@
 - [ ] Identificar 1-2 controles negativos si son verificables.
 
 ## Tarea 2.3 — Protocolo experimental (19/10–26/10; 20 h)
-- [ ] Revisar el prompt v1 con el tutor y congelarlo para el experimento principal.
+- [ ] Revisar el protocolo V4 con el tutor y congelarlo antes de iniciar la campaña experimental.
 - [ ] Definir unidad de hallazgo y reglas TP/FP/FN, duplicados y pendientes.
 - [ ] Acordar rúbrica cualitativa y qué significa un parche válido.
-- [ ] Registrar modalidades chat/agente, herramientas habilitadas y versiones.
+- [ ] Registrar el modelo exacto, configuración de razonamiento, fecha, prompt y respuesta íntegra de ChatGPT, Gemini y Claude en modo conversacional.
 - [ ] Definir repeticiones y subestudio opcional de variantes de modelo.
 
 ## Tarea 2.4 — Preparación de herramientas (22/10–29/10; 18 h)
 - [ ] Preparar Linux/WSL/Docker y anotar versiones de Python, solc, Slither y Mythril.
-- [ ] Confirmar accesos a ChatGPT, Gemini y Claude Code, sin compartir credenciales.
+- [ ] Confirmar accesos a ChatGPT, Gemini y Claude, sin compartir credenciales.
 - [ ] Preparar el repositorio de GitHub con este esqueleto.
 - [ ] Verificar compilación de dos contratos antes de hacer auditorías.
 
