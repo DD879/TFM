@@ -1,0 +1,1 @@
+run_id,contract_id,tool,model_exact,mode,run_date_utc,prompt_version,reported_vulnerability,function_reported,lines_reported,confidence,matched_ground_truth,classification,qual_location_0_2,qual_explanation_0_2,qual_severity_0_2,qual_fix_0_2,patch_compiles,patch_fixes_issue,notes

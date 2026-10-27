@@ -8,3 +8,24 @@ __pycache__/
 node_modules/
 *.log
 .DS_Store
+
+# Ground truth y datos privados
+manifest_private.json
+ground_truth_private.csv
+sources_original_private/
+source_revision_private.txt
+
+# Archivos temporales del experimento
+pilot/workspace_aislado/
+*.bytecode
+
+# Paquetes descargados
+*.zip
+
+# Python
+__pycache__/
+*.pyc
+
+# Entornos locales
+.venv/
+.env
