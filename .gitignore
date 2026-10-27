@@ -29,3 +29,40 @@ __pycache__/
 # Entornos locales
 .venv/
 .env
+
+# ==========================================
+# Documentacion academica y archivos internos
+# ==========================================
+PECs/
+docs/PLAN_DE_ACCION_PEC2.md
+literature/
+
+# Versiones intermedias de prompts
+prompts/auditoria_v1.txt
+prompts/auditoria_v2.txt
+
+# Plantillas sustituidas
+analysis/plantilla_resultados.csv
+
+# Datos privados del benchmark
+ground_truth/
+manifest_private.json
+ground_truth_private.csv
+source_revision_private.txt
+sources_original_private/
+
+# Archivos temporales del piloto
+pilot/inputs_v4/
+pilot/workspace_aislado/
+
+# Contratos de pruebas de laboratorio
+contracts/TestReentrancy.sol
+contracts/Vulnerable.sol
+*.bytecode
+
+# Paquetes y archivos generados
+*.zip
+__pycache__/
+*.pyc
+.venv/
+.env
