@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 """Prepara una entrada de auditoría V4 reproducible sin modificar el Solidity original."""
 from pathlib import Path
-import argparse, hashlib, json
+import argparse, hashlib, json, re
 
 parser=argparse.ArgumentParser()
 parser.add_argument('contract',type=Path,help='Ruta al contrato blind SCxx.sol')
 parser.add_argument('--prompt',type=Path,default=Path('prompts/auditoria_v4.txt'))
 parser.add_argument('--output-dir',type=Path,default=Path('pilot/inputs_v4'))
 args=parser.parse_args()
+root=Path(__file__).resolve().parents[1]
+allowed=root/'contracts'/'blind'
+if args.contract.resolve().parent != allowed.resolve() or not re.fullmatch(r'SC\d{2}\.sol', args.contract.name):
+    raise SystemExit('ERROR: usar exclusivamente un SCxx.sol de contracts/blind; no introducir originales anotados o ground truth.')
 raw=args.contract.read_bytes()
 code=raw.decode('utf-8')
 base=args.prompt.read_text(encoding='utf-8')
@@ -29,7 +33,7 @@ meta={
  'prompt_version':'v4',
  'prompt_sha256':hashlib.sha256(args.prompt.read_bytes()).hexdigest(),
  'prepared_input':str(out),
- 'notes':'Vista numerada; no modifica ni recompila el fichero .sol original.'
+ 'prepared_input_sha256':hashlib.sha256((message+'\n').encode('utf-8')).hexdigest()
 }
 metaout=args.output_dir/(stem+'_v4_metadata.json')
 metaout.write_text(json.dumps(meta,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

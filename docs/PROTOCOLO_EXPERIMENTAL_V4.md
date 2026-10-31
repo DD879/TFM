@@ -1,43 +1,60 @@
-# Protocolo experimental V4 (PEC 2)
+# Protocolo experimental V4
 
-La versión V3 corresponde exclusivamente al piloto de SC01 y SC04. **No mezclar las ejecuciones V3 con la campaña V4** al calcular métricas.
+## 1. Diseño
 
-## Alcance
-- Comparación principal: ChatGPT GPT-6 Instant; Gemini 3.1 Pro (razonamiento Medio); Claude Sonnet 5.5 (esfuerzo Medio). Los tres sistemas se evaluarán mediante interfaces conversacionales.
-- Las tres herramientas se evaluarán en modo conversacional, sin acceso a Internet, repositorios externos ni ejecución de comandos. Se registrarán modelo, configuración, fecha y respuesta íntegra.
-- Corpus: 12 contratos blind SC01–SC12, con ground truth privado separado.
-- Tres ejecuciones independientes por contrato y herramienta en la campaña principal (108 auditorías previstas); una sesión nueva por ejecución, sin memoria del proyecto ni acceso a la referencia de verdad.
+Se compararán ChatGPT (GPT-6 Instant), Gemini (3.1 Pro, razonamiento Medio) y Claude (Sonnet 5.5, esfuerzo Medio) mediante sus interfaces conversacionales. Las denominaciones exactas y ajustes se registrarán en cada ejecución; los niveles de razonamiento no se consideran equivalentes entre proveedores.
 
-## Preparar entrada numerada
-Desde la raíz de `~/TFM`, tras copiar `prompts/auditoria_v4.txt` y `scripts/prepare_prompt_v4.py`:
+El corpus principal consta de doce contratos Solidity (`contracts/blind/SC01.sol`–`SC12.sol`) procedentes de SmartBugs Curated. La campaña comprende tres ejecuciones independientes por contrato y plataforma: **108 auditorías conversacionales**. Slither y Mythril son las dos líneas base. Los resultados del piloto V3 (SC01 y SC04) se conservarán aparte.
+
+## 2. Preparación de entradas
+
+Desde la raíz del proyecto:
 
 ```bash
+python3 scripts/check_repo_integrity.py
 python3 scripts/prepare_prompt_v4.py contracts/blind/SC01.sol
 ```
 
-El script genera `pilot/inputs_v4/SC01_v4_prompt.txt` y `pilot/inputs_v4/SC01_v4_metadata.json`. El archivo `.sol` permanece intacto. Los prefijos `L001 |` se utilizan únicamente para localizar instrucciones. Las tres herramientas recibirán exactamente el mismo prompt numerado.
+El generador inserta el Solidity en `prompts/auditoria_v4.txt`, con numeración `L001`, `L002`, etc. La misma entrada se facilitará a los tres modelos. Se archivarán el texto exacto enviado y los hashes del código, la plantilla y la entrada preparada.
 
-## Registro mínimo por ejecución
-Contrato, fuente SHA-256, plataforma, nombre exacto del modelo, modalidad, esfuerzo/razonamiento, fecha y hora, prompt V4, archivo de entrada, respuesta original, herramientas disponibles y eventuales rechazos. Conservar la respuesta completa sin corregirla.
+No adjuntar a las conversaciones `ground_truth_private.csv`, `manifest_private.json`, fuentes anotadas, resultados del piloto ni `public_index.csv`.
 
-## Adjudicación
-- **TP**: hallazgo real del ground truth identificado con categoría y ubicación verificables.
-- **FN**: vulnerabilidad real etiquetada no detectada.
-- **FP**: hallazgo de seguridad descartado tras revisión independiente; no basta que esté ausente del benchmark.
-- **Duplicado**: dos alertas de una misma causa raíz; contar una sola.
-- **Informativo**: observación de estilo, gas, mantenimiento o calidad sin vulnerabilidad sustentada; no contar automáticamente como FP.
-- **Pendiente**: hallazgo adicional no adjudicado; excluir temporalmente de métricas hasta revisarlo.
+## 3. Ejecución
 
-La localización se considera exacta cuando el modelo identifica la instrucción o línea afectada inequívocamente. El número Lxxx es ayuda de trazabilidad, no requisito exclusivo.
+Cada repetición se hará en una conversación nueva y sin contexto de otras pruebas. Desactivar o aislar memorias, instrucciones personales, documentos y herramientas con capacidad de consultar datos externos. Si alguna condición no puede comprobarse, se anotará en la ficha de ejecución.
 
-## Calidad de explicaciones y parches
-Cuatro dimensiones, 0–2 puntos cada una: localización, explicación, severidad, mitigación. Un parche meramente plausible y sin verificar no puede recibir 2/2 en mitigación. Para 2/2: compilar con la versión adecuada y probar localmente la corrección sin regresiones relevantes. Compilar no prueba ausencia de otras vulnerabilidades.
+Registrar: ID del contrato, plataforma, modelo y versión mostrados, modo de razonamiento, fecha y zona horaria, hashes, versión del prompt, funciones habilitadas, respuesta completa y cualquier rechazo. No reformular la petición a partir de la respuesta de otra herramienta ni orientar al modelo hacia una categoría concreta. Los parámetros no mostrados por la interfaz se dejarán sin valor.
 
-## Repetibilidad
-Registrar por separado (a) frecuencia de detección por vulnerabilidad en tres ejecuciones y (b) estabilidad entre conjuntos de hallazgos normalizados de las repeticiones. No confundir frecuencia de detección con consistencia global.
+## 4. Unidad de evaluación y adjudicación
 
-## Seguridad metodológica
-No se compartirá el ground truth con los modelos. Las pruebas se realizarán en sesiones independientes, sin búsqueda web ni archivos adicionales. La posible contaminación del benchmark se documentará como amenaza a la validez.
+La unidad será una vulnerabilidad independiente dentro de cada contrato, identificada por causa raíz, categoría y localización. Cuando varias alertas describan el mismo fallo, se registrarán sus referencias originales y se contabilizará un único hallazgo.
 
-## Estado
-V4 está **definida y lista para una validación de formato**, pero no se presenta como ejecutada. Los resultados V3 del piloto se conservan sin modificar.
+| Clasificación | Criterio |
+| --- | --- |
+| `TP` | Vulnerabilidad real detectada con causa y localización suficientes. |
+| `FN` | Vulnerabilidad de referencia que la ejecución no ha identificado. |
+| `FP` | Alerta descartada tras revisión técnica de su viabilidad. |
+| `PENDING` | Hallazgo adicional que aún necesita comprobación. |
+| Informativo | Observación de estilo, gas o mantenimiento que no implica un fallo demostrado. |
+
+La ausencia de una alerta en el benchmark no basta para clasificarla como FP. Los casos pendientes se mantendrán separados de los recuentos definitivos. Registrar explícitamente un FN por cada vulnerabilidad de referencia que no se detecte; no inferir los FN de la ausencia de filas en un CSV. El número de línea solo es una ayuda: también se comprobarán función e instrucción afectadas.
+
+Las adjudicaciones para el cálculo se registrarán en `analysis/adjudicaciones.csv`. La rúbrica se cumplimentará en `analysis/rubrica.csv`. Las decisiones dudosas se revisarán por segunda vez y quedarán acompañadas de su justificación.
+
+## 5. Métricas y consistencia
+
+Se calcularán los recuentos `TP`, `FP` y `FN` y, cuando sus denominadores no sean cero, precisión, recall y F1. Los resultados se presentarán por plataforma y categoría, con los recuentos absolutos. No se utilizarán las ejecuciones V3 para estimar el rendimiento de V4.
+
+La frecuencia de detección de cada vulnerabilidad será el número de repeticiones correctas entre tres. La consistencia se medirá por separado comparando los conjuntos de hallazgos normalizados de cada pareja de ejecuciones mediante Jaccard (`|A ∩ B| / |A ∪ B|`). Para dos conjuntos vacíos se fijará el acuerdo en 1 y se señalará expresamente. Se mostrarán los tres pares y su media descriptiva para cada contrato.
+
+Las alertas pendientes y los controles negativos ausentes limitan la interpretación de los falsos positivos. No se generalizará el resultado de doce contratos a todos los contratos Solidity.
+
+## 6. Explicaciones y propuestas de corrección
+
+La evaluación cualitativa puntuará de 0 a 2 la localización, la explicación causal, la justificación de la severidad y la mitigación. Un parche plausible no alcanzará la puntuación máxima sin compilar y superar una prueba local que compruebe la corrección del fallo conocido. La compilación aislada no demuestra seguridad.
+
+## 7. Amenazas a la validez
+
+Los contratos de SmartBugs son públicos y pueden formar parte de los datos de entrenamiento de los modelos. Se han eliminado comentarios, pero se conservan nombres originales y otras pistas. El procedimiento no permite descartar contaminación ni afirmar que las etiquetas públicas describan todas las vulnerabilidades posibles.
+
+Si se ensayan variantes con identificadores neutralizados o controles negativos, se documentarán como condiciones separadas con sus propios hashes y comprobaciones de compilación. No se mezclarán con la serie principal. Todos los análisis se realizarán sobre código público y en entornos autorizados, sin pruebas contra contratos desplegados de terceros.

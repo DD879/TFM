@@ -1,1 +1,6 @@
 date,tool,model_or_version,access_mode,enabled_tools,parameters,notes
+,ChatGPT,GPT-6 Instant,interfaz conversacional,no,por confirmar,Modelo previsto para V4
+,Gemini,3.1 Pro,interfaz conversacional,no,razonamiento Medio,Modelo previsto para V4
+,Claude,Sonnet 5.5,interfaz conversacional,no,esfuerzo Medio,Modelo previsto para V4
+,Slither,0.11.6,CLI local,no,por documentar,Version declarada en la memoria; verificar en el entorno de ejecucion
+,Mythril,0.24.8,contenedor Docker,no,por documentar,Version declarada en la memoria; verificar en el contenedor

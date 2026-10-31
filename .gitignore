@@ -1,68 +1,37 @@
+# Entorno local y secretos
 .env
 .env.*
 *.key
 *.pem
+*.log
+.DS_Store
 __pycache__/
 *.pyc
 .venv/
 node_modules/
-*.log
-.DS_Store
 
-# Ground truth y datos privados
+# Corpus y anotaciones privadas: nunca adjuntar a la entrada de los modelos
 manifest_private.json
 ground_truth_private.csv
-sources_original_private/
 source_revision_private.txt
+sources_original_private/
+ground_truth/
 
-# Archivos temporales del experimento
-pilot/workspace_aislado/
-*.bytecode
-
-# Paquetes descargados
-*.zip
-
-# Python
-__pycache__/
-*.pyc
-
-# Entornos locales
-.venv/
-.env
-
-# ==========================================
-# Documentacion academica y archivos internos
-# ==========================================
+# Planificación académica y entregas fuera del repositorio público
 PECs/
 docs/PLAN_DE_ACCION_PEC2.md
-literature/
 
-# Versiones intermedias de prompts
-prompts/auditoria_v1.txt
-prompts/auditoria_v2.txt
-
-# Plantillas sustituidas
-analysis/plantilla_resultados.csv
-
-# Datos privados del benchmark
-ground_truth/
-manifest_private.json
-ground_truth_private.csv
-source_revision_private.txt
-sources_original_private/
-
-# Archivos temporales del piloto
+# Insumos temporales y material de laboratorio
 pilot/inputs_v4/
 pilot/workspace_aislado/
-
-# Contratos de pruebas de laboratorio
 contracts/TestReentrancy.sol
 contracts/Vulnerable.sol
 *.bytecode
 
-# Paquetes y archivos generados
+# Versión antigua y plantillas obsoletas, conservadas solo en copia de trabajo
+prompts/auditoria_v1.txt
+prompts/auditoria_v2.txt
+
+# Paquetes de trabajo/exportación
 *.zip
-__pycache__/
-*.pyc
-.venv/
-.env
+*.rar

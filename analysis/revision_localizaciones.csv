@@ -1,0 +1,13 @@
+﻿id,original,categoria,swc_referencia,lineas,funcion,instruccion,linea_contrastada,compilado,alcance
+SC01,reentrancy_simple.sol,reentrancy,SWC-107,24,withdrawBalance,L24: if( ! (msg.sender.call.value(userBalance[msg.sender])() ) ){,SI,NO,Correspondencia de línea y causa aparente; no implica prueba dinámica
+SC02,reentrancy_cross_function.sol,reentrancy,SWC-107,24,withdrawBalance,"L24: (bool success, ) = msg.sender.call.value(amountToWithdraw)(""""); // At this point, the caller's ",SI,NO,Correspondencia de línea y causa aparente; no implica prueba dinámica
+SC03,reentrancy_dao.sol,reentrancy,SWC-107,18,withdrawAll,L18: bool callResult = msg.sender.call.value(oCredit)();,SI,NO,Correspondencia de línea y causa aparente; no implica prueba dinámica
+SC04,phishable.sol,access_control,SWC-115,20,withdrawAll,L20: require(tx.origin == owner);,SI,NO,Correspondencia de línea y causa aparente; no implica prueba dinámica
+SC05,simple_suicide.sol,access_control,SWC-106,12;13,sudicideAnyone,L12: function sudicideAnyone() { / L13: selfdestruct(msg.sender);,SI,NO,Correspondencia de línea y causa aparente; no implica prueba dinámica
+SC06,unprotected0.sol,access_control,,25,changeOwner,L25: function changeOwner(address _newOwner),SI,NO,Correspondencia de línea y causa aparente; no implica prueba dinámica
+SC07,integer_overflow_add.sol,arithmetic,SWC-101,17,run,L17: count += input;,SI,NO,Correspondencia de línea y causa aparente; no implica prueba dinámica
+SC08,timelock.sol,arithmetic,SWC-101,22,increaseLockTime,L22: lockTime[msg.sender] += _secondsToIncrease;,SI,NO,Correspondencia de línea y causa aparente; no implica prueba dinámica
+SC09,unchecked_return_value.sol,unchecked_low_level_calls,SWC-104,17,callnotchecked,L17: callee.call();,SI,NO,Correspondencia de línea y causa aparente; no implica prueba dinámica
+SC10,lotto.sol,unchecked_low_level_calls,SWC-104,20;27,sendToWinner / withdrawLeftOver,L20: winner.send(winAmount); / L27: msg.sender.send(this.balance);,SI,NO,Correspondencia de línea y causa aparente; no implica prueba dinámica
+SC11,dos_simple.sol,denial_of_service,SWC-128 (tentative),17;18,ifillArray,L17: for(uint i=0;i<350;i++) { / L18: listAddresses.push(msg.sender);,SI,NO,Correspondencia de línea y causa aparente; no implica prueba dinámica
+SC12,send_loop.sol,denial_of_service,SWC-113 (tentative),24,refundAll,"L24: require(refundAddresses[x].send(refunds[refundAddresses[x]])); // doubly bad, now a single fail",SI,NO,Correspondencia de línea y causa aparente; no implica prueba dinámica
